@@ -1,0 +1,12 @@
+#frameTable th{
+  border: 1px solid black;
+  padding:10px;
+  background-color: bisque;
+}
+
+#frameTable tr{
+  border: 1px solid black;
+  padding:10px;
+  background-color: grey;
+
+}
