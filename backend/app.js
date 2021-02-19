@@ -20,11 +20,8 @@ const io = require("socket.io")(server, options);
 
 //let interval;
 
-
-
 //image over server
 //https://gist.github.com/companje/b95e735650f1cd2e2a41/stargazers
-
 
 io.on("connection", (socket) => {
   console.log("New client connected");
@@ -34,7 +31,7 @@ io.on("connection", (socket) => {
     getApiAndEmit(socket);
   }, 1000);
 
-/*   setTimeout(() => {
+  /*   setTimeout(() => {
     clearInterval(interval);
   }, 2000); */
 
@@ -44,53 +41,43 @@ io.on("connection", (socket) => {
   });
 });
 
-
-const makeRandomFrame=()=>{
+const makeRandomFrame = () => {
   var rowsGenerated = {};
   var mainData = {};
-  
+
   var cameraData = {};
   var cameraDump = [];
   var personDump = [];
-  
+
   for (let j = 0; j < 3; j++) {
     cameraData.camera_no = "1";
     cameraData.camera_flag = "✔";
     cameraDump.push(cameraData);
   }
-  
+
   for (let i = 0; i < 2; i++) {
     mainData.personIndex = "1";
     mainData.cameraIndex = cameraDump;
     personDump.push(mainData);
   }
-  
+
   rowsGenerated.picture = "picture data";
-  rowsGenerated.frame_data = personDump; 
+  rowsGenerated.frame_data = personDump;
 
-  return rowsGenerated
-}
-
-
+  return rowsGenerated;
+};
 
 const getApiAndEmit = (socket) => {
-
-
   const responseTest = makeRandomFrame();
   //const response = new Date();
 
-
-
-
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", responseTest);
-  console.log("date is initialized")
+  console.log("date is initialized");
 
   var myArray = [1, 2];
-  
-  var rand = myArray[(Math.random() * myArray.length) | 0];
 
-  
+  var rand = myArray[(Math.random() * myArray.length) | 0];
 
   fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
     // it's possible to embed binary data
@@ -107,7 +94,5 @@ const getApiAndEmit = (socket) => {
     }
   });
 };
-
-
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
