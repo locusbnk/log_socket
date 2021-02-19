@@ -1,48 +1,47 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import "./ImageSelection.css";
-
-
 
 import socketIOClient from "socket.io-client";
 
 const ENDPOINT = "http://127.0.0.1:4001/";
 
-
-
 export default function ImageSelection() {
-  var ctx = document.getElementById('canvas').getContext('2d')
+  const canvasRef = useRef(null);
 
-  const [response, setResponse] = useState("");
+  //const [response, setResponse] = useState("");
+
+  // implement draw on ctx here
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("image", function(info) {
+
+    socket.on("imageConversionByServer", function (data) {
+      var img = new Image();
+
+      img.setAttribute("src", data);
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+    });
+
+    /* socket.on("image", function (info) {
       if (info.image) {
         var img = new Image();
-        img.src = 'data:image/jpeg;base64,' + info.buffer;
-        setResponse(ctx.drawImage(img, 0, 0));
+        img.src = "data:image/jpeg;base64," + info.buffer;
+        
+       
       }
-    });
-    
+    }); */
   }, []);
-
-
-
-
 
   return (
     <div className="myCanvas">
-      <canvas id="canvas" width="500" height="500" style={{ border: "2px black solid" }}>
-        Your browser does not support the HTML canvas tag.
-      </canvas>
-
-
-      
-
-
-
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
     </div>
   );
 }
-
