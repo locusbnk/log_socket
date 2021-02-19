@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 
 import "./Table.css";
 
@@ -23,11 +22,6 @@ export default function TableComponent() {
     ],
   });
 
-  const socket = io("ws://localhost:5000");
-
-  socket.on("connect", () => {
-    console.log(socket.connected);
-  });
 
   console.log(SERVER_DATA);
   console.log(frameValues);

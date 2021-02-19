@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -7,6 +7,10 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+
+import { io } from "socket.io-client";
+
+const socket = io("ws://localhost:5000/");
 
 const useStyles = makeStyles({
   table: {
@@ -86,68 +90,96 @@ var rows = {
   ],
 };
 
-/* function createData(frameIndex,cameraIndex) {
-  return { frameIndex,cameraIndex};
+socket.on("connection", () => {
+  console.log("socket connected");
+});
+
+
+var rowsGenerated = {};
+var mainData = {};
+
+var cameraData = {};
+var cameraDump = [];
+var personDump = [];
+
+for (let j = 0; j < 5; j++) {
+  cameraData.camera_no = "1";
+  cameraData.camera_flag = "y";
+  cameraDump.push(cameraData);
 }
 
+for (let i = 0; i < 10; i++) {
+  mainData.personIndex = "1";
+  mainData.cameraIndex = cameraDump;
+  personDump.push(mainData);
+}
 
-const rows = [
-  createData(0,['y','y','n','y']),
-  createData(0,['y','y','n','y']),
-  createData(0,['y','y','n','y']),
-  createData(0,['y','y','n','y']),
-  createData(0,['y','y','n','y']),
-  
-];
- */
+rowsGenerated.picture = "picture data";
+rowsGenerated.frame_data = personDump;
+
 export default function BasicTable() {
   const classes = useStyles();
+
+  const [frameValues, setFrameValues] = useState({
+    picture: "picture data",
+    frame_data: [
+      {
+        personIndex: "1",
+        cameraIndex: [
+          {
+            camera_no: "1",
+            camera_flag: "y",
+          },
+          //can expand
+        ],
+      },
+      //can expand
+    ],
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => setFrameValues(rowsGenerated), 1000);
+    setTimeout(() => {
+      return () => {
+        clearInterval(interval);
+      };
+    }, 10000);
+  }, []);
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {rows.frame_data.map((item) => (
+            {frameValues.frame_data.map((item) => (
               <TableCell>Person {item.personIndex}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableHead>
-        <TableRow>
-          {rows.frame_data.map((item)=>(
-            <TableCell>
-              {item.cameraIndex.map((camera)=>(
-                <TableCell>
-                  {camera.camera_no}
-                </TableCell>
-              ))}
-            </TableCell>
-             
-          ))}
+          <TableRow>
+            {frameValues.frame_data.map((item) => (
+              <TableCell>
+                {item.cameraIndex.map((camera) => (
+                  <TableCell>{camera.camera_no}</TableCell>
+                ))}
+              </TableCell>
+            ))}
           </TableRow>
-
         </TableHead>
 
-     
         <TableBody>
-        
-            <TableRow>
-            
-
-          {rows.frame_data.map((item)=>(
-            <>
-            <TableCell>
-              {item.cameraIndex.map((camera)=>(
+          <TableRow>
+            {frameValues.frame_data.map((item) => (
+              <>
                 <TableCell>
-                  {camera.camera_flag}
+                  {item.cameraIndex.map((camera) => (
+                    <TableCell>{camera.camera_flag}</TableCell>
+                  ))}
                 </TableCell>
-              ))}
-            </TableCell>
-             </>
-          ))}
+              </>
+            ))}
           </TableRow>
-       
         </TableBody>
       </Table>
     </TableContainer>
