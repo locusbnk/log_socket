@@ -1,10 +1,10 @@
 const express = require("express");
 const http = require("http");
 const fs = require("fs");
-const path = require("path");
+//const path = require("path");
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
-const { clearInterval } = require("timers");
+//const { clearInterval } = require("timers");
 
 const app = express();
 app.use(index);
@@ -50,7 +50,7 @@ const getApiAndEmit = (socket) => {
 
   var myArray = [1, 2];
   var rand = myArray[(Math.random() * myArray.length) | 0];
-  
+
   fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
     // it's possible to embed binary data
     // within arbitrarily-complex objects

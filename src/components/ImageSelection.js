@@ -23,8 +23,6 @@ export default function ImageSelection() {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 100, 100);
-      
-
     });
 
     /* socket.on("image", function (info) {
@@ -39,11 +37,7 @@ export default function ImageSelection() {
 
   return (
     <div className="myCanvas">
-      <canvas
-        ref={canvasRef}
-        width={600}
-        height={400}
-      />
+      <canvas ref={canvasRef} width={500} height={400} />
     </div>
   );
 }
