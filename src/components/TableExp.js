@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-/* import { makeStyles } from "@material-ui/core/styles";
- import Table from "@material-ui/core/Table";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper"; */
+import Paper from "@material-ui/core/Paper";
 
 import socketIOClient from "socket.io-client";
 
 const ENDPOINT = "http://127.0.0.1:4001/";
 
-/* const useStyles = makeStyles({
+const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-}); */
+});
 
 /* var rows = {
   picture: "picture_data",
@@ -116,9 +116,9 @@ rowsGenerated.picture = "picture data";
 rowsGenerated.frame_data = personDump; */
 
 export default function BasicTable() {
-  //const classes = useStyles();
-
-  /*  const [frameValues, setFrameValues] = useState({
+  const classes = useStyles();
+  /* 
+   const [frameValues, setFrameValues] = useState({
     picture: "picture data",
     frame_data: [
       {
@@ -135,17 +135,43 @@ export default function BasicTable() {
     ],
   }); */
 
-  const [respons, setResponse] = useState([]);
+
+  const [personColumnData, setPersonColumnData] = useState([]);
+  const [cameraColumnNoData, setCameraColumnNoData] = useState([]);
+  const [cameraColumnFlagData, setCameraColumnFlagData] = useState([]);
+
+  //const [respons, setResponse] = useState([]);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("FromAPI", (responseTest) => {
-      console.log(responseTest)
-      var dataRes = JSON.stringify(responseTest)
-      setResponse((prevValue) => [dataRes, ...prevValue]);
+    //  console.log(responseTest);
+      setPersonColumnData(
+        responseTest.frame_data.map((item) => item.personIndex)
+      );
+      setCameraColumnNoData(
+        responseTest.frame_data.map((item) =>item.cameraIndex.map((sItem)=>sItem.camera_no) )
+      );
+      setCameraColumnFlagData(prevData=>(
+        
+        [responseTest.frame_data.map((item) =>item.cameraIndex.map((sItem)=>sItem.camera_flag)),...prevData])
+      );
+      
     });
-
   }, []);
+
+
+
+  /* useEffect(()=>{
+  console.log(personColumnData);
+  console.log(cameraColumnNoData)
+  console.log(cameraColumnFlagData)
+
+
+  },[personColumnData,cameraColumnNoData,cameraColumnFlagData]) */
+
+
+
 
   /*   useEffect(() => {
     const interval = setInterval(() => setFrameValues(rowsGenerated), 1000);
@@ -157,30 +183,32 @@ export default function BasicTable() {
   }, []);
  */
 
-  console.log(respons);
+  //console.log(respons);
 
   return (
-    <ul>
-      {respons.map((val) => {
-        return <li>{val}</li>;
-      })}
-    </ul>
+    // {<ul>
+    //   {respons.map((val) => {
+    //     return <li>{val}</li>;
+    //   })}
+    // </ul>}
 
-    /*  <TableContainer component={Paper}>
+    //<div>asd</div>
+
+   <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {frameValues.frame_data.map((item) => (
-              <TableCell>Person {item.personIndex}</TableCell>
+            {personColumnData.map((item) => (
+              <TableCell>Person {item}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableHead>
           <TableRow>
-            {frameValues.frame_data.map((item) => (
+            {cameraColumnNoData.map((item) => (
               <TableCell>
-                {item.cameraIndex.map((camera) => (
-                  <TableCell>{camera.camera_no}</TableCell>
+                {item.map((cameraNo) => (
+                  <TableCell>{cameraNo}</TableCell>
                 ))}
               </TableCell>
             ))}
@@ -188,19 +216,21 @@ export default function BasicTable() {
         </TableHead>
 
         <TableBody>
+        {cameraColumnFlagData.map((rowData)=>(
           <TableRow>
-            {frameValues.frame_data.map((item) => (
-              <>
-                <TableCell>
-                  {item.cameraIndex.map((camera) => (
-                    <TableCell>{camera.camera_flag}</TableCell>
-                  ))}
-                </TableCell>
-              </>
+            {rowData.map((rowItems)=>(
+              <TableCell>
+                {rowItems.map((item)=>(
+                  <TableCell>{item}</TableCell>
+                ))}
+              </TableCell>
             ))}
           </TableRow>
+
+        ))}
+          
         </TableBody>
       </Table>
-    </TableContainer> */
+    </TableContainer> 
   );
 }
