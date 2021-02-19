@@ -22,6 +22,9 @@ const io = require("socket.io")(server, options);
 
 
 
+//image over server
+//https://gist.github.com/companje/b95e735650f1cd2e2a41/stargazers
+
 
 io.on("connection", (socket) => {
   console.log("New client connected");

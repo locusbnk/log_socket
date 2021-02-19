@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-/* import Table from "@material-ui/core/Table";
+/* import { makeStyles } from "@material-ui/core/styles";
+ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -12,11 +12,13 @@ import socketIOClient from "socket.io-client";
 
 const ENDPOINT = "http://127.0.0.1:4001/";
 
-const useStyles = makeStyles({
+/* const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-});
+}); */
+
+
 
 /* var rows = {
   picture: "picture_data",
@@ -116,7 +118,7 @@ rowsGenerated.picture = "picture data";
 rowsGenerated.frame_data = personDump; */
 
 export default function BasicTable() {
-  const classes = useStyles();
+  //const classes = useStyles();
 
  /*  const [frameValues, setFrameValues] = useState({
     picture: "picture data",
@@ -138,14 +140,21 @@ export default function BasicTable() {
  
 
 
-  const [respons, setResponse] = useState("");
+  const [respons, setResponse] = useState([""]);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("FromAPI", data => {
-      setResponse(data);
+     
+     var dataString = data.toString();
+
+      setResponse((prevValue)=>(
+        [dataString,...prevValue]
+      ));
     });
   }, []);
+
+
 /*   useEffect(() => {
     const interval = setInterval(() => setFrameValues(rowsGenerated), 1000);
     setTimeout(() => {
@@ -155,14 +164,16 @@ export default function BasicTable() {
     }, 10000);
   }, []);
  */
- 
+
 
   return (
-    <div>
-    <h3>{respons}</h3>
-
-    </div>
     
+    <ul>{respons.map((val)=>{
+      return(
+        <li>{val}</li>
+      )
+    })}</ul>
+
     
    /*  <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
