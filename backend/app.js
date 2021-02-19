@@ -31,9 +31,6 @@ io.on("connection", (socket) => {
     getApiAndEmit(socket);
   }, 1000);
 
-  /*   setTimeout(() => {
-    clearInterval(interval);
-  }, 2000); */
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
