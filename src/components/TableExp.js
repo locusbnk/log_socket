@@ -8,9 +8,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import { io } from "socket.io-client";
+import socketIOClient from "socket.io-client";
 
-const socket = io("ws://localhost:5000/");
+const ENDPOINT = "http://127.0.0.1:4001/";
 
 const useStyles = makeStyles({
   table: {
@@ -90,9 +90,7 @@ var rows = {
   ],
 };
 
-socket.on("connection", () => {
-  console.log("socket connected");
-});
+
 
 
 var rowsGenerated = {};
@@ -137,7 +135,18 @@ export default function BasicTable() {
     ],
   });
 
+ 
+
+
+  const [respons, setResponse] = useState("");
+
   useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", data => {
+      setResponse(data);
+    });
+  }, []);
+/*   useEffect(() => {
     const interval = setInterval(() => setFrameValues(rowsGenerated), 1000);
     setTimeout(() => {
       return () => {
@@ -145,9 +154,18 @@ export default function BasicTable() {
       };
     }, 10000);
   }, []);
+ */
+ 
+
 
   return (
-    <TableContainer component={Paper}>
+    <div>
+    <h3>{respons}</h3>
+
+    </div>
+    
+    
+   /*  <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -182,6 +200,6 @@ export default function BasicTable() {
           </TableRow>
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> */
   );
 }
