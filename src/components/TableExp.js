@@ -154,7 +154,7 @@ export default function BasicTable() {
       );
       setCameraColumnFlagData(prevData=>(
         
-        [responseTest.frame_data.map((item) =>item.cameraIndex.map((sItem)=>sItem.camera_flag)),...prevData])
+        [...prevData,responseTest.frame_data.map((item) =>item.cameraIndex.map((sItem)=>sItem.camera_flag))])
       );
       
     });
@@ -198,6 +198,8 @@ export default function BasicTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
+          <TableCell>{"Person No"}</TableCell>
+
             {personColumnData.map((item) => (
               <TableCell>Person {item}</TableCell>
             ))}
@@ -205,6 +207,8 @@ export default function BasicTable() {
         </TableHead>
         <TableHead>
           <TableRow>
+          <TableCell>{"Camera No"}</TableCell>
+
             {cameraColumnNoData.map((item) => (
               <TableCell>
                 {item.map((cameraNo) => (
@@ -216,8 +220,12 @@ export default function BasicTable() {
         </TableHead>
 
         <TableBody>
-        {cameraColumnFlagData.map((rowData)=>(
+
+        {cameraColumnFlagData.map((rowData,index,cameraColumnFlagData)=>(
+
           <TableRow>
+        <TableCell>frame no : {cameraColumnFlagData.length-index}</TableCell>
+
             {rowData.map((rowItems)=>(
               <TableCell>
                 {rowItems.map((item)=>(

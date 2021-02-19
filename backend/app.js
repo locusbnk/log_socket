@@ -49,13 +49,13 @@ const makeRandomFrame = () => {
   var cameraDump = [];
   var personDump = [];
 
-  for (let j = 0; j < 3; j++) {
+  for (let j = 0; j < 5; j++) {
     cameraData.camera_no = "1";
     cameraData.camera_flag = "✔";
     cameraDump.push(cameraData);
   }
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     mainData.personIndex = "1";
     mainData.cameraIndex = cameraDump;
     personDump.push(mainData);
