@@ -18,41 +18,26 @@ const options = {
 };
 const io = require("socket.io")(server, options);
 
-let interval;
+//let interval;
+
+
+
 
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  interval = setInterval(() => {
+  /* interval =  */
+  setInterval(() => {
     getApiAndEmit(socket);
-
-
-    var myArray = [1, 2];
-    var rand = myArray[(Math.random() * myArray.length) | 0];
-
-    fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
-      // it's possible to embed binary data
-      // within arbitrarily-complex objects
-      if (err) {
-        console.error(err);
-      } else {
-        socket.emit(
-          "imageConversionByServer",
-          "data:image/png;base64," + data.toString("base64")
-        );
-
-        console.log("image file is initialized");
-      }
-    });
   }, 1000);
 
-  setTimeout(() => {
+/*   setTimeout(() => {
     clearInterval(interval);
-  }, 2000);
+  }, 2000); */
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-    clearInterval(interval);
+    //clearInterval(interval);
   });
 });
 
@@ -61,6 +46,27 @@ const getApiAndEmit = (socket) => {
 
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", response);
+  console.log("date is initialized")
+
+  var myArray = [1, 2];
+  var rand = myArray[(Math.random() * myArray.length) | 0];
+  
+  fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
+    // it's possible to embed binary data
+    // within arbitrarily-complex objects
+    if (err) {
+      console.error(err);
+    } else {
+      socket.emit(
+        "imageConversionByServer",
+        "data:image/png;base64," + data.toString("base64")
+      );
+
+      console.log("image file is initialized");
+    }
+  });
 };
+
+
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
