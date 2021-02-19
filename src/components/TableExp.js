@@ -18,8 +18,6 @@ const ENDPOINT = "http://127.0.0.1:4001/";
   },
 }); */
 
-
-
 /* var rows = {
   picture: "picture_data",
   frame_data: [
@@ -120,7 +118,7 @@ rowsGenerated.frame_data = personDump; */
 export default function BasicTable() {
   //const classes = useStyles();
 
- /*  const [frameValues, setFrameValues] = useState({
+  /*  const [frameValues, setFrameValues] = useState({
     picture: "picture data",
     frame_data: [
       {
@@ -137,25 +135,19 @@ export default function BasicTable() {
     ],
   }); */
 
- 
-
-
-  const [respons, setResponse] = useState([""]);
+  const [respons, setResponse] = useState([]);
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-     
-     var dataString = data.toString();
-
-      setResponse((prevValue)=>(
-        [dataString,...prevValue]
-      ));
+    socket.on("FromAPI", (responseTest) => {
+      console.log(responseTest)
+      var dataRes = JSON.stringify(responseTest)
+      setResponse((prevValue) => [dataRes, ...prevValue]);
     });
+
   }, []);
 
-
-/*   useEffect(() => {
+  /*   useEffect(() => {
     const interval = setInterval(() => setFrameValues(rowsGenerated), 1000);
     setTimeout(() => {
       return () => {
@@ -165,17 +157,16 @@ export default function BasicTable() {
   }, []);
  */
 
+  console.log(respons);
 
   return (
-    
-    <ul>{respons.map((val)=>{
-      return(
-        <li>{val}</li>
-      )
-    })}</ul>
+    <ul>
+      {respons.map((val) => {
+        return <li>{val}</li>;
+      })}
+    </ul>
 
-    
-   /*  <TableContainer component={Paper}>
+    /*  <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>

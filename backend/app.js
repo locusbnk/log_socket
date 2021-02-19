@@ -44,15 +44,53 @@ io.on("connection", (socket) => {
   });
 });
 
+
+const makeRandomFrame=()=>{
+  var rowsGenerated = {};
+  var mainData = {};
+  
+  var cameraData = {};
+  var cameraDump = [];
+  var personDump = [];
+  
+  for (let j = 0; j < 5; j++) {
+    cameraData.camera_no = "1";
+    cameraData.camera_flag = "y";
+    cameraDump.push(cameraData);
+  }
+  
+  for (let i = 0; i < 10; i++) {
+    mainData.personIndex = "1";
+    mainData.cameraIndex = cameraDump;
+    personDump.push(mainData);
+  }
+  
+  rowsGenerated.picture = "picture data";
+  rowsGenerated.frame_data = personDump; 
+
+  return rowsGenerated
+}
+
+
+
 const getApiAndEmit = (socket) => {
-  const response = new Date();
+
+
+  const responseTest = makeRandomFrame();
+  //const response = new Date();
+
+
+
 
   // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
+  socket.emit("FromAPI", responseTest);
   console.log("date is initialized")
 
   var myArray = [1, 2];
+  
   var rand = myArray[(Math.random() * myArray.length) | 0];
+
+  
 
   fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
     // it's possible to embed binary data
