@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const fs = require("fs");
 
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
@@ -22,7 +23,18 @@ io.on("connection", (socket) => {
   if (interval) {
     clearInterval(interval);
   }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
+
+  interval = setInterval(() => {
+    getApiAndEmit(socket);
+    fs.readFile(__dirname + "./images/1.png", function (err, buf) {
+      // it's possible to embed binary data
+      // within arbitrarily-complex objects
+      socket.emit("image", { image: true, buffer: buf.toString("base64") });
+
+      console.log("image file is initialized");
+    });
+  }, 1000);
+
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     clearInterval(interval);
@@ -31,8 +43,10 @@ io.on("connection", (socket) => {
 
 const getApiAndEmit = (socket) => {
   const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
+ 
+    // Emitting a new message. Will be consumed by the client
+    socket.emit("FromAPI", response);
+  
 };
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
