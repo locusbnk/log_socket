@@ -71,3 +71,5 @@ export default {
 };
 
 
+// bounding box hareko camera ko object haru maa thapde
+//

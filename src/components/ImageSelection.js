@@ -7,7 +7,11 @@ import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://127.0.0.1:4001/";
 
 export default function ImageSelection() {
+
   const canvasRef = useRef(null);
+
+
+
 
   //const [response, setResponse] = useState("");
 
@@ -25,6 +29,7 @@ export default function ImageSelection() {
       ctx.drawImage(img, 100, 100);
     });
 
+
     /* socket.on("image", function (info) {
       if (info.image) {
         var img = new Image();
@@ -36,8 +41,14 @@ export default function ImageSelection() {
   }, []);
 
   return (
-    <div className="myCanvas">
-      <canvas ref={canvasRef} width={500} height={400} />
+    <div className="viewController">
+      <div className="myCanvas">
+        <canvas ref={canvasRef} width={500} height={400} />
+      </div>
+      <div>
+
+      </div>
+      
     </div>
   );
 }

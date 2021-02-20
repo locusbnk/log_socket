@@ -31,7 +31,6 @@ io.on("connection", (socket) => {
     getApiAndEmit(socket);
   }, 1000);
 
-
   socket.on("disconnect", () => {
     console.log("Client disconnected");
     //clearInterval(interval);
@@ -66,7 +65,11 @@ const makeRandomFrame = () => {
 
 const getApiAndEmit = (socket) => {
   const responseTest = makeRandomFrame();
-  //const response = new Date();
+
+  //since we are emiting the api each second this is our fake frame call
+  //we  will keep the value of response Test in our my sql database
+  //for each connection a new table will be created
+  
 
   // Emitting a new message. Will be consumed by the client
   socket.emit("FromAPI", responseTest);
