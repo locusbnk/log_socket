@@ -8,94 +8,113 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-import socketIOClient from "socket.io-client";
+//import socketIOClient from "socket.io-client";
 
 const ENDPOINT = "http://127.0.0.1:4001/";
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  TableCell:{
-    padding:"0px",
-    margin:"0px"
-  }
+    table: {
+        minWidth: 650,
+    },
+    TableCell: {
+        padding: "0px",
+        margin: "0px"
+    }
 });
 
 export default function BasicTable() {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const [personColumnData, setPersonColumnData] = useState([]);
-  const [cameraColumnNoData, setCameraColumnNoData] = useState([]);
-  const [cameraColumnFlagData, setCameraColumnFlagData] = useState([]);
+    const [personColumnData, setPersonColumnData] = useState([]);
+    const [cameraColumnNoData, setCameraColumnNoData] = useState([]);
+    const [cameraColumnFlagData, setCameraColumnFlagData] = useState([]);
 
-  //const [respons, setResponse] = useState([]);
+    //const [respons, setResponse] = useState([]);
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", (responseTest) => {
-      //  console.log(responseTest);
-      setPersonColumnData(
-        responseTest.frame_data.map((item) => item.personIndex)
-      );
-      setCameraColumnNoData(
-        responseTest.frame_data.map((item) =>
-          item.cameraIndex.map((sItem) => sItem.camera_no)
-        )
-      );
-      setCameraColumnFlagData((prevData) => [
-        ...prevData,
-        responseTest.frame_data.map((item) =>
-          item.cameraIndex.map((sItem) => sItem.camera_flag)
-        ),
-      ]);
-    });
-  }, []);
+    //useEffect(() => {
+    //  const socket = socketIOClient(ENDPOINT);
+    //  socket.on("FromAPI", (responseTest) => {
+    //    //  console.log(responseTest);
+    //    setPersonColumnData(
+    //      responseTest.frame_data.map((item) => item.personIndex)
+    //    );
+    //    setCameraColumnNoData(
+    //      responseTest.frame_data.map((item) =>
+    //        item.cameraIndex.map((sItem) => sItem.camera_no)
+    //      )
+    //    );
+    //    setCameraColumnFlagData((prevData) => [
+    //      ...prevData,
+    //      responseTest.frame_data.map((item) =>
+    //        item.cameraIndex.map((sItem) => sItem.camera_flag)
+    //      ),
+    //    ]);
+    //  });
+    //}, []);
 
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table" size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>{"Person No"}</TableCell>
+    return ( <
+        TableContainer component = { Paper } >
+        <
+        Table className = { classes.table }
+        //aria-label = "simple table"
+        size = "small" >
+        <
+        TableHead >
+        <
+        TableRow >
+        <
+        TableCell > { "Person No" } < /TableCell>
 
-            {personColumnData.map((item) => (
-              <TableCell>Person {item}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableHead>
-          <TableRow>
-            <TableCell>{"Camera No"}</TableCell>
+        {
+            personColumnData.map((item) => ( <
+                TableCell > Person { item } < /TableCell>
+            ))
+        } <
+        /TableRow> < /
+        TableHead > <
+        TableHead >
+        <
+        TableRow >
+        <
+        TableCell > { "Camera No" } < /TableCell>
 
-            {cameraColumnNoData.map((item) => (
-              <TableCell>
-                {item.map((cameraNo) => (
-                  <TableCell>{cameraNo}</TableCell>
-                ))}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
+        {
+            cameraColumnNoData.map((item) => ( <
+                TableCell > {
+                    item.map((cameraNo) => ( <
+                        TableCell > { cameraNo } < /TableCell>
+                    ))
+                } <
+                /TableCell>
+            ))
+        } <
+        /TableRow> < /
+        TableHead >
 
-        <TableBody>
-          {cameraColumnFlagData.map((rowData, index, cameraColumnFlagData) => (
-            <TableRow>
-              <TableCell>
-                frame no : {cameraColumnFlagData.length - index}
-              </TableCell>
+        <
+        TableBody > {
+            cameraColumnFlagData.map((rowData, index, cameraColumnFlagData) => ( <
+                TableRow >
+                <
+                TableCell >
+                frame no: { cameraColumnFlagData.length - index } <
+                /TableCell>
 
-              {rowData.map((rowItems) => (
-                <TableCell>
-                  {rowItems.map((item) => (
-                    <TableCell>{item}</TableCell>
-                  ))}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+                {
+                    rowData.map((rowItems) => ( <
+                        TableCell > {
+                            rowItems.map((item) => ( <
+                                TableCell > { item } < /TableCell>
+                            ))
+                        } <
+                        /TableCell>
+                    ))
+                } <
+                /TableRow>
+            ))
+        } <
+        /TableBody> < /
+        Table > <
+        /TableContainer>
+    );
 }
