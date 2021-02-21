@@ -1,4 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect,useState} from "react";
+import {Scrollbars} from 'rc-scrollbars'
+
+
 import socket from './gettingSocket';
 
 
@@ -6,7 +9,7 @@ import socket from './gettingSocket';
 export default function ImageGrid() {
 
 
-  const classes = useStyles();
+
 
   const [personColumnData, setPersonColumnData] = useState([]);
   const [cameraColumnNoData, setCameraColumnNoData] = useState([]);
@@ -16,7 +19,7 @@ export default function ImageGrid() {
   //const [respons, setResponse] = useState([]);
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    // const socket = socketIOClient(ENDPOINT);
     socket.on("FromAPI", (responseTest) => {
       //  console.log(responseTest);
       setPersonColumnData(
@@ -85,10 +88,17 @@ useEffect(() => {
  
 }, []);
 
+var st = `h`;
+
 
   return (
     <div>
-      hello
+    <Scrollbars style={{ width: "auto", height: 520 }}>
+      
+      <p>{st.toString()}</p>
+
+    </Scrollbars>
+
     </div>
   );
 

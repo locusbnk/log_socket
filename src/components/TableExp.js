@@ -10,6 +10,10 @@ import Paper from "@material-ui/core/Paper";
 
 import socketIOClient from "socket.io-client";
 
+
+import {Scrollbars} from 'rc-scrollbars'
+
+
 const ENDPOINT = "http://127.0.0.1:4001/";
 
 const useStyles = makeStyles({
@@ -53,6 +57,7 @@ export default function BasicTable() {
   }, []);
 
   return (
+    <Scrollbars style={{ width: "auto", height: 1020 }}>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table" size="small">
         <TableHead>
@@ -97,5 +102,6 @@ export default function BasicTable() {
         </TableBody>
       </Table>
     </TableContainer>
+    </Scrollbars>
   );
 }

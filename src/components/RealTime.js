@@ -1,16 +1,28 @@
 import React from "react";
-//import Table from './TableExp'
-// import ImageSection from './ImageSelection'
+import './RealTime.css'
+
+
+import Table from "./TableExp";
+import ImageSection from './ImageSelection'
 import ImageGrid from "./imageGrid";
 
 export default function RealTime() {
   return (
-    <div>
+    <div className="mainPage">
+      <div className="mainCanvas">
+        <ImageSection/>
+      </div>
 
-       {/* <ImageSection/> */}
-       <ImageGrid />
-      {/* <Table/> */}
-      
+        <div className="sideGrid">
+          <ImageGrid/>
+        </div>
+      <div className="tablePart">
+        <Table />
+      </div>
     </div>
   );
 }
+
+
+
+
