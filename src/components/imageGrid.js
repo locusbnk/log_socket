@@ -1,92 +1,96 @@
-
-import dataJSON from '../data/dataex'
-
-var React = require('react');
-var ReactCanvas = require('react-canvas');
+import React, { useRef, useEffect } from "react";
+import socket from './gettingSocket';
 
 
 
+export default function ImageGrid() {
 
 
-var Surface = ReactCanvas.Surface;
-var Image = ReactCanvas.Image;
-var Text = ReactCanvas.Text;
+  const classes = useStyles();
 
-var MyComponent = React.createClass({
-
-  render: function () {
-    var surfaceWidth = window.innerWidth;
-    var surfaceHeight = window.innerHeight;
-    var imageStyle = this.getImageStyle();
-    var textStyle = this.getTextStyle();
-
-    return (
-      <Surface width={surfaceWidth} height={surfaceHeight} left={0} top={0}>
-
-{dataJSON.images.map((data)=>(
-      
-
-      <Image style={imageStyle} src={`data:image/png;base64,${data}`}/>
-
-
-     ))}
-
-        <Text style={textStyle}>
-          Here is some text below an image.
-        </Text>
-      </Surface>
-    );
-  },
-
-  getImageHeight: function () {
-    return Math.round(window.innerHeight / 2);
-  },
-
-  getImageStyle: function () {
-    return {
-      top: 0,
-      left: 0,
-      width: window.innerWidth,
-      height: this.getImageHeight()
-    };
-  },
-
-  getTextStyle: function () {
-    return {
-      top: this.getImageHeight() + 10,
-      left: 0,
-      width: window.innerWidth,
-      height: 20,
-      lineHeight: 20,
-      fontSize: 12
-    };
-  }
-
-});
-
-
-export default MyComponent;
-
-
-
-
-/* import React from 'react'
-
-
-
-export default function imageGrid() {
+  const [personColumnData, setPersonColumnData] = useState([]);
+  const [cameraColumnNoData, setCameraColumnNoData] = useState([]);
+  const [cameraColumnFlagData, setCameraColumnFlagData] = useState([]);
   
+
+  //const [respons, setResponse] = useState([]);
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", (responseTest) => {
+      //  console.log(responseTest);
+      setPersonColumnData(
+        responseTest.frame_data.map((item) => item.personIndex)
+      );
+      setCameraColumnNoData(
+        responseTest.frame_data.map((item) =>
+          item.cameraIndex.map((sItem) => sItem.camera_no)
+        )
+      );
+      setCameraColumnFlagData((prevData) => [
+        ...prevData,
+        responseTest.frame_data.map((item) =>
+          item.cameraIndex.map((sItem) => sItem.camera_flag)
+        ),
+      ]);
+    });
+  }, []);
+
+
+  useEffect(() => {
+
+    //image
+    socket.on("FromAPI", function (dataJSON) {
+      console.log(dataJSON)
+
+   
+  }, [])});
+
+
+// draw rectangle
+const drawRect = (info, style = {}) => {
+  /* const { x, y, w, h } = info;
+  const { borderColor = 'red', borderWidth = 1.5 } = style;
+ 
+  ctx.beginPath();
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = borderWidth
+  ctx.rect(x, y, w, h);
+  ctx.stroke(); */
+
+}
+
+//draw images
+const drawImg = (info,binaryData)=>{
+  /* const { x, y, w, h } = info;
+  var img = new Image();
+
+  img.setAttribute("src", binaryData);
+  
+  ctx.drawImage(img,0,0,0,0, x, y,w,h);
+  
+ */
+}
+
+
+
+useEffect(() => {
+  /* drawImg({x:200,y:200,w:300,h:300},)
+  const r1Info = { x: 20, y: 30, w: 100, h: 50 };
+  const r1Style = { borderColor: 'red', borderWidth: 2};
+  drawRect(r1Info, r1Style);
+ 
+  const r2Info = { x: 100, y: 100, w: 80, h: 150 };
+  drawRect(r2Info); */
+ 
+}, []);
+
 
   return (
     <div>
-     {dataJSON.images.map((data)=>(
-      
-
-      <img alt ="this is" src={`data:image/png;base64,${data}`}/>
-
-     ))}
-     
+      hello
     </div>
-  )
-}
- */
+  );
+
+
+      }

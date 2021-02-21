@@ -1,3 +1,6 @@
+
+const dataJSON =require('./dataex');
+
 const express = require("express");
 const http = require("http");
 const fs = require("fs");
@@ -18,6 +21,10 @@ const options = {
 };
 const io = require("socket.io")(server, options);
 
+
+
+
+
 //let interval;
 
 //image over server
@@ -37,7 +44,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const makeRandomFrame = () => {
+/* const makeRandomFrame = () => {
   var rowsGenerated = {};
   var mainData = {};
 
@@ -61,10 +68,10 @@ const makeRandomFrame = () => {
   rowsGenerated.frame_data = personDump;
 
   return rowsGenerated;
-};
+}; */
 
 const getApiAndEmit = (socket) => {
-  const responseTest = makeRandomFrame();
+  //const responseTest = makeRandomFrame();
 
   //since we are emiting the api each second this is our fake frame call
   //we  will keep the value of response Test in our my sql database
@@ -72,14 +79,14 @@ const getApiAndEmit = (socket) => {
   
 
   // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", responseTest);
+  socket.emit("FromAPI", dataJSON);
   console.log("date is initialized");
 
-  var myArray = [1, 2];
+  /* var myArray = [1, 2];
 
   var rand = myArray[(Math.random() * myArray.length) | 0];
-
-  fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
+ */
+/*   fs.readFile(__dirname + `/images/${rand}.png`, function (err, data) {
     // it's possible to embed binary data
     // within arbitrarily-complex objects
     if (err) {
@@ -92,7 +99,7 @@ const getApiAndEmit = (socket) => {
 
       console.log("image file is initialized");
     }
-  });
+  }); */
 };
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

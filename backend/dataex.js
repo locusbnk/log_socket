@@ -1,4 +1,4 @@
-export default 
+exports.default= 
 {
   "detectedPersons": [
     "{\"cameraIndex\": 0, \"globalpersonIndex\": 0, \"bbox\": [199.0, 101.0, 236.0, 246.0]}",
