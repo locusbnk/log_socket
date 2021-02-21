@@ -12,3 +12,8 @@ canvas {
 }
 
 
+.imagesGrid{
+  display: flex;
+  flex-direction: column;
+  
+}

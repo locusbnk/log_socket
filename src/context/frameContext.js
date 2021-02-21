@@ -5,18 +5,19 @@ export const FrameContext = createContext();
 
 export const FrameProvider = (props) => {
   //detected person state
-  const [frameValues, setFrameValues] = useState([
+  const [frameValues, setFrameValues] = useState(
     {
       "detectedPersons":[
         {
           cameraIndex: 0,
           globalpersonIndex: 0,
           bbox: [199.0, 101.0, 236.0, 246.0],
-        }
+        },
+        
       ],
-      "images":""
+      "images":["",""]
     }
-  ]);
+  );
   //images that we got state
  
 
@@ -30,12 +31,12 @@ export const FrameProvider = (props) => {
       },
       []
     );
-  },[]);
+  },[setFrameValues]);
 
 
- /*  useEffect(()=>{
-    console.log(frameValues)
-  },[frameValues]) */
+  // useEffect(()=>{
+  //   console.log(frameValues)
+  // },[frameValues])
 
   return (
     <FrameContext.Provider
