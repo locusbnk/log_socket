@@ -31,7 +31,7 @@ export const FrameProvider = (props) => {
       },
       []
     );
-  },[setFrameValues]);
+  },[]);
 
 
   // useEffect(()=>{
