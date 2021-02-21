@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
 
-import RealTime from './components/RealTime'
+import RealTime from "./components/RealTime";
+
+import {FrameProvider} from "./context/frameContext";
 
 export default function App() {
   return (
     <div>
-      <RealTime/>
+      <FrameProvider>
+        <RealTime />
+      </FrameProvider>
     </div>
-  )
+  );
 }
