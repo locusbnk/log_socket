@@ -16,9 +16,9 @@ export const CameraSelectProvider = (props) => {
 
   return (
     <CameraSelectContext.Provider
-      value={{
-        cameraSelectState: [selectedCameras, setSelectedCameras],
-      }}
+      value={
+        [selectedCameras,setSelectedCameras]
+      }
       key={Date.now()}
     >
       {props.children}

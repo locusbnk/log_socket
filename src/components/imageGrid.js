@@ -4,7 +4,7 @@ import { Scrollbars } from "rc-scrollbars";
 // import socket from "./gettingSocket";
 
 import { FrameContext } from "../context/frameContext";
-import {CameraSelectContext} from '../context/cameraSelectContext'
+
 
 export default function ImageGrid() {
   /*  useEffect(() => {
@@ -66,23 +66,22 @@ export default function ImageGrid() {
 function ImagesGrid() {
   //destructuring
   const { frameState } = useContext(FrameContext);
-  const {cameraSelectState} = useContext(CameraSelectContext);
+  // const [selectedCameras,setSelectedCameras] = useContext(CameraSelectContext);
 
 
   //state extraction
   const [frameValues, setFrameValues] = frameState;
-  // const [selectedCameras,setSelectedCameras] = cameraSelectState;
 
-  useEffect(() => {
-    // console.log(frameValues);
-    // var arrCamera = frameValues.detectedPersons.map((item)=>item.cameraIndex)
-    // setSelectedCameras(Array.from(new Set(arrCamera)));
-  }, [frameValues]);
+  // useEffect(() => {
+  //   // console.log(frameValues);
+  //   // var arrCamera = frameValues.detectedPersons.map((item)=>item.cameraIndex)
+  //   // setSelectedCameras(Array.from(new Set(arrCamera)));
+  // }, [frameValues]);
 
 
-  const cameraClickHandler=()=>{
+  // const cameraClickHandler=()=>{
 
-  }
+  // }
 
   return (
     <div className="imagesGrid">

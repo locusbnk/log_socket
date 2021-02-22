@@ -16,11 +16,11 @@ import {CameraSelectContext} from '../context/cameraSelectContext'
 export default function ImageSelection() {
   //destructuring
   const { frameState } = useContext(FrameContext);
-  const {cameraSelectState} = useContext(CameraSelectContext)
 
   //state extraction
   const [frameValues, setFrameValues] = frameState;
-  const [selectedCameras,setSelectedCameras] = cameraSelectState;
+  const [selectedCameras , setSelectedCameras]  = useContext(CameraSelectContext)
+
 
   //  useEffect(() => {
   //    console.log(frameValues);
@@ -53,29 +53,27 @@ export default function ImageSelection() {
   //   }); */
   // }, [frameValues]);
 
-  
-  const canvasRef = useRef(null)
-  
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const context = canvas.getContext('2d')
-    //Our first draw
-    context.fillStyle = '#000000'
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height)
-  }, [])
-  
+
 
   return (
     <div className="viewController">
       <div className="myCanvas">
-        <canvas
-          ref={canvasRef}
-          width={1300}
-          height={500}
-          style={{ border: "5px solid red" }}
-        />
+       HELLO THIS IS CANVAS
       </div>
-      <div></div>
     </div>
   );
 }
+
+
+
+
+
+
+
+//  SOURCES:
+
+
+/* 
+https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
+
+*/
