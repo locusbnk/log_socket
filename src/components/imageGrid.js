@@ -87,7 +87,7 @@ function ImagesGrid() {
   return (
     <div className="imagesGrid">
       {frameValues.images.map((binaryImage) => (
-        <img alt="nano" src={`data:image/jpeg;base64,${binaryImage}`} style={{ width: "auto", height: 200 ,padding:"auto",margin:"auto",border:"5px solid red"}} onClick={cameraClickHandler} />
+        <img alt="nano" src={`data:image/jpeg;base64,${binaryImage}`} style={{ width: "auto", height: 200 ,padding:"auto",margin:"auto",border:"5px solid red"}} />
       ))}
     </div>
   );
